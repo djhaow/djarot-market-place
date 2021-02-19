@@ -2,6 +2,7 @@
 
 namespace app\modules\transaction\controllers;
 
+use Yii;
 use yii\data\ActiveDataProvider;
 use app\models\WithdrawTransactions;
 
@@ -18,12 +19,16 @@ class LogController extends Controller
      */
     public function actionIndex()
     {
-      $query = WithdrawTransactions::find();
+      //~~ Get id from user login
+      $user_id = Yii::$app->user->identity->id;
+
+      $query = WithdrawTransactions::find()
+        ->where(['seller_id' => $user_id]);
       $dataProvider = new ActiveDataProvider([
         'query' => $query,
       ]);
       return $this->render('index', [
-          'dataProvider' => $dataProvider,
+        'dataProvider' => $dataProvider,
       ]);
     }
 }

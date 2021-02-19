@@ -8,10 +8,14 @@ $this->title = 'Log Transaction';
 
     <div class="jumbotron">
         <h1>Welcome!</h1>
-
         <p class="lead">Start sell your goods.</p>
-
-        <p><a class="btn btn-lg btn-success" href="#" onclick="alert('Coming Soon!')">Start Selling</a></p>
+        <!-- <p><a class="btn btn-lg btn-success" href="#" onclick="alert('Coming Soon!')">Start Selling</a></p> -->
+        <?php
+            echo (Yii::$app->user->isGuest) ? 
+                "<p><a class='btn btn-lg btn-success' href='/site/login'>Start Selling</a></p>" 
+            : 
+                "<p><a class='btn btn-lg btn-success' href='/transaction/log'>Check Transaction</a></p>";
+        ?>
     </div>
 
     <div class="body-content">
@@ -51,7 +55,3 @@ $this->title = 'Log Transaction';
 
     </div>
 </div>
-
-<script>
-    // alert('asd');
-</script>

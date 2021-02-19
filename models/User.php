@@ -17,6 +17,20 @@ class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
             'password' => 'makmur',
             'authKey' => 'test1key',
             'accessToken' => '1-token',
+        ],
+        '2' => [
+            'id' => '2',
+            'username' => 'jaya',
+            'password' => 'jaya',
+            'authKey' => 'test1key',
+            'accessToken' => '1-token',
+        ],
+        '3' => [
+            'id' => '3',
+            'username' => 'sukses',
+            'password' => 'sukses',
+            'authKey' => 'test1key',
+            'accessToken' => '1-token',
         ]
     ];
 

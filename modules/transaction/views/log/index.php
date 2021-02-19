@@ -17,9 +17,15 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
-          ['class' => 'yii\grid\SerialColumn'],
+          [
+            'attribute' => 'transaction_id',
+            'label' => 'ID'
+          ],
           'bank_code',
-          'bank_account_number',
+          [
+            'attribute' => 'bank_account_number',
+            'label' => 'Acc. No'
+          ],
           [
             'attribute' => 'amount',
             'format' => 'raw',
@@ -27,7 +33,6 @@ $this->params['breadcrumbs'][] = $this->title;
               return "Rp. " . number_format((float)$model->amount, 2);
             }
           ],
-          'beneficiary_name',
           'status',
           'remark',
           [
@@ -48,20 +53,37 @@ $this->params['breadcrumbs'][] = $this->title;
             }
           ],
           [
+            'attribute' => 'fee',
+            'format' => 'raw',
+            'value' => function ($model) {
+              if ($model->fee == NULL) return;
+              return "Rp. " . number_format((float)$model->fee, 2);
+            }
+          ],
+          [
             'class' => 'yii\grid\ActionColumn',
             'header' => 'Actions',
             'headerOptions' => ['style' => 'color:#337ab7'],
             'template' => '{view}',
             'buttons' => [
               'view' => function ($url, $model) {
-                return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', $url, ['title' => Yii::t('app', 'lead-view'),]);
+                $view_action = "";
+                if ($model->status == "FAILED") {
+                  $view_action = Html::a('<span class="glyphicon glyphicon-send"></span>', $url, ['title' => Yii::t('app', 'lead-view'),]);
+                } elseif($model->status == "PENDING") {
+                  $view_action = Html::a('<span class="glyphicon glyphicon-refresh"></span>', $url, ['title' => Yii::t('app', 'lead-view'),]);
+                }
+                return $view_action;
               }
             ],
-            'urlCreator' => function ($action, $model, $key, $index) {
-              if ($action === 'view') {
-                $url = "/transaction/api_service";
-                return $url;
+            'urlCreator' => function ($action, $model) {
+              $url = "";
+              if ($model->status == "FAILED") {
+                $url = "/api/disburstment/send";
+              } elseif($model->status == "PENDING") {
+                $url = "/api/disburstment/get";
               }
+              return $url;
             }
           ],
         ],
