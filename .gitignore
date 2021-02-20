@@ -32,6 +32,8 @@ tests/_support/_generated
 #vagrant folder
 /.vagrant
 
+#config folder
+/config/db.php
 
 # OS generated files
 .DS_Store
