@@ -2,7 +2,7 @@
 
 return [
     'class' => 'yii\db\Connection',
-    'dsn' => 'mysql:host=localhost;dbname=your_database_name',
+    'dsn' => 'mysql:host=localhost;port=8889;dbname=djarot_market_place;unix_socket=/Applications/MAMP/tmp/mysql/mysql.sock',
     'username' => 'root',
     'password' => 'root',
     'charset' => 'utf8',
