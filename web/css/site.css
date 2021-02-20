@@ -113,3 +113,11 @@ a.desc:after {
 .nav > li > form > button.logout:focus {
     outline: none;
 }
+
+.badge-primary {
+    background-color: #337ab7;
+}
+
+.badge-info {
+    background-color: #5bc0de;
+}

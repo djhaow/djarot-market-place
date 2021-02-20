@@ -11,7 +11,7 @@ use Yii;
  * @property int $seller_id
  * @property string $bank_code
  * @property string $bank_account_number
- * @property float $account_balance Last account balance from seller
+ * @property float $account_balance Last seller account balance
  * @property float $amount seller withdrawal amount
  * @property string|null $beneficiary_name beneficiary_name data from response API
  * @property string $status status data from response API (PENDING,SUCCESS), If response failed (FAILED)

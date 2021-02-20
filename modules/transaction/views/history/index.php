@@ -1,14 +1,14 @@
 <?php
 
-use yii\helpers\Html;
-use yii\grid\GridView;
+  use yii\helpers\Html;
+  use yii\grid\GridView;
 
-/* @var $this yii\web\View */
-/* @var $searchModel app\models\CountrySearch */
-/* @var $dataProvider yii\data\ActiveDataProvider */
+  /* @var $this yii\web\View */
+  /* @var $searchModel app\models\CountrySearch */
+  /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Withdraw History';
-$this->params['breadcrumbs'][] = $this->title;
+  $this->title = 'Withdraw History';
+  $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="history-index">
 
@@ -19,12 +19,19 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
           [
             'attribute' => 'transaction_id',
-            'label' => 'ID'
+            'label' => 'Trns. ID',
+            'format' => 'raw',
+            'value' => function ($model) {
+              return '<span class="badge badge-pill badge-primary">' . $model->transaction_id . '</span>';
+            }
           ],
-          'bank_code',
           [
-            'attribute' => 'bank_account_number',
-            'label' => 'Acc. No'
+            'attribute' => 'bank_code',
+            'label' => 'Bank Acc.',
+            'format' => 'raw',
+            'value' => function ($model) {
+              return $model->bank_code . '<br><span class="badge badge-pill badge-primary">' . $model->bank_account_number . '</span>';
+            }
           ],
           [
             'attribute' => 'amount',
@@ -33,7 +40,29 @@ $this->params['breadcrumbs'][] = $this->title;
               return "Rp. " . number_format((float)$model->amount, 2);
             }
           ],
-          'status',
+          [
+            'attribute' => 'fee',
+            'format' => 'raw',
+            'value' => function ($model) {
+              if ($model->fee == NULL) return;
+              return "Rp. " . number_format((float)$model->fee, 2);
+            }
+          ],
+          [
+            'attribute' => 'status',
+            'format' => 'raw',
+            'value' => function ($model) {
+              $view = "";
+              if ($model->status == "FAILED"){
+                $view = Html::a('<span class="glyphicon glyphicon-remove text-danger"></span>');
+              } elseif($model->status == "PENDING") {
+                $view = Html::a('<span class="glyphicon glyphicon-hourglass"></span>');
+              } else {
+                $view = Html::a('<span class="glyphicon glyphicon-ok text-success"></span>');
+              }
+              return $view;
+            }
+          ],
           'remark',
           [
             'attribute' => 'withdraw_date',
@@ -53,14 +82,6 @@ $this->params['breadcrumbs'][] = $this->title;
             }
           ],
           [
-            'attribute' => 'fee',
-            'format' => 'raw',
-            'value' => function ($model) {
-              if ($model->fee == NULL) return;
-              return "Rp. " . number_format((float)$model->fee, 2);
-            }
-          ],
-          [
             'class' => 'yii\grid\ActionColumn',
             'header' => 'Actions',
             'headerOptions' => ['style' => 'color:#337ab7'],
@@ -69,9 +90,9 @@ $this->params['breadcrumbs'][] = $this->title;
               'view' => function ($url, $model) {
                 $view_action = "";
                 if ($model->status == "FAILED") {
-                  $view_action = Html::a('<span class="glyphicon glyphicon-send"></span>', $url, ['title' => Yii::t('app', 'lead-view'),]);
+                  $view_action = Html::a('<span class="glyphicon glyphicon-send"></span>', $url, ['title' => Yii::t('app', 'resend'),]);
                 } elseif($model->status == "PENDING") {
-                  $view_action = Html::a('<span class="glyphicon glyphicon-refresh"></span>', $url, ['title' => Yii::t('app', 'lead-view'),]);
+                  $view_action = Html::a('<span class="glyphicon glyphicon-refresh"></span>', $url, ['title' => Yii::t('app', 'check'),]);
                 }
                 return $view_action;
               }

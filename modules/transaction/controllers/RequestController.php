@@ -35,6 +35,8 @@ class RequestController extends Controller
         // curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
         // curl_setopt($ch, CURLOPT_USERPWD, $secretKey);
         // $result = curl_exec($ch);
+        $http_status = 200;
+        // $http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         // $result_json = json_decode($result, true);
         // curl_close($ch);
 
@@ -45,11 +47,15 @@ class RequestController extends Controller
         $result_json['fee'] = 4000;
         $user_id = Yii::$app->user->identity->id;
         $model->seller_id = $user_id;
-        $model->api_transaction_id = (string)$result_json['id'];
-        $model->status = $result_json['status'];
-        $model->timestamp = $result_json['timestamp'];
-        $model->beneficiary_name = $result_json['beneficiary_name'];
-        $model->fee = $result_json['fee'];
+        if ($http_status == 200) {
+          $model->api_transaction_id = (string)$result_json['id'];
+          $model->status = $result_json['status'];
+          $model->timestamp = $result_json['timestamp'];
+          $model->beneficiary_name = $result_json['beneficiary_name'];
+          $model->fee = $result_json['fee'];
+        } else {
+          $model->status = "FAILED";
+        }
         $model->save();
 
         return $this->redirect(array('/transaction/history'));

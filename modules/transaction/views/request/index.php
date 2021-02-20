@@ -1,13 +1,12 @@
 <?php
+  use yii\helpers\Html;
 
-use yii\helpers\Html;
+  /* @var $this yii\web\View */
+  /* @var $model app\models\WithdrawTransaction */
 
-/* @var $this yii\web\View */
-/* @var $model app\models\WithdrawTransaction */
-
-$this->title = 'New Request';
-$this->params['breadcrumbs'][] = ['label' => 'Withdraw ', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+  $this->title = 'New Request';
+  $this->params['breadcrumbs'][] = ['label' => 'Withdraw ', 'url' => ['index']];
+  $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="withdraw-create">
 
