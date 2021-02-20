@@ -38,7 +38,8 @@ AppAsset::register($this);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
-            !Yii::$app->user->isGuest ? (['label' => 'Withdraw Log', 'url' => ['/transaction/log']]) : "",
+            !Yii::$app->user->isGuest ? (['label' => 'Withdraw History', 'url' => ['/transaction/history']]) : "",
+            !Yii::$app->user->isGuest ? (['label' => 'Withdraw Request', 'url' => ['/transaction/request']]) : "",
             Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/site/login']]
             ) : (

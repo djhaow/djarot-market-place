@@ -7,10 +7,10 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\CountrySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Withdraw Log';
+$this->title = 'Withdraw History';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="log-index">
+<div class="history-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -88,6 +88,5 @@ $this->params['breadcrumbs'][] = $this->title;
           ],
         ],
     ]); ?>
-
 
 </div>

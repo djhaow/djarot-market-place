@@ -11,7 +11,7 @@ use yii\web\Controller;
 /**
  * Default controller for the `transaction` module
  */
-class LogController extends Controller
+class HistoryController extends Controller
 {
     /**
      * Renders the index view for the module

@@ -2,7 +2,7 @@
 
 /* @var $this yii\web\View */
 
-$this->title = 'Log Transaction';
+$this->title = 'History Transaction';
 ?>
 <div class="site-index">
 
@@ -14,7 +14,7 @@ $this->title = 'Log Transaction';
             echo (Yii::$app->user->isGuest) ? 
                 "<p><a class='btn btn-lg btn-success' href='/site/login'>Start Selling</a></p>" 
             : 
-                "<p><a class='btn btn-lg btn-success' href='/transaction/log'>Check Transaction</a></p>";
+                "<p><a class='btn btn-lg btn-success' href='/transaction/history'>Check Transaction</a></p>";
         ?>
     </div>
 

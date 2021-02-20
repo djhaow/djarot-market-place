@@ -4,7 +4,6 @@ namespace app\modules\api\controllers;
 
 use yii\web\Controller;
 use app\models\WithdrawTransactions;
-use yii\db\ActiveRecord;
 
 /**
  * Default controller for the `api` module
@@ -44,7 +43,7 @@ class DisburstmentController extends Controller
         $withdraw_transaction->receipt = $result_json['receipt'];
         $withdraw_transaction->save();
 
-        return $this->redirect(array('/transaction/log'));
+        return $this->redirect(array('/transaction/history'));
     }
 
     public function actionSend()
@@ -85,7 +84,6 @@ class DisburstmentController extends Controller
         $withdraw_transaction->fee = $result_json['fee'];
         $withdraw_transaction->save();
 
-        // TODO : save response into local database
-        return $this->redirect(array('/transaction/log'));
+        return $this->redirect(array('/transaction/history'));
     }
 }
