@@ -9,4 +9,5 @@ TODO :
 [X] Send POST data request restful API for disburstment
 [X] Save response from API disburstment into local database
 [X] Create migrate database schema
-[] Code improvement
+[X] Code improvement
+[] Create docs

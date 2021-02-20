@@ -22,11 +22,11 @@ class HistoryController extends Controller
       //~~ Get id from user login
       $user_id = Yii::$app->user->identity->id;
 
-      $query = WithdrawTransactions::find()
-        ->where(['seller_id' => $user_id]);
+      $query = WithdrawTransactions::find()->where(['seller_id' => $user_id]);
       $dataProvider = new ActiveDataProvider([
         'query' => $query,
       ]);
+
       return $this->render('index', [
         'dataProvider' => $dataProvider,
       ]);

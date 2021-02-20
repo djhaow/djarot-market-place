@@ -4,6 +4,7 @@ namespace app\modules\transaction\controllers;
 use Yii;
 use app\models\WithdrawTransactions;
 use yii\web\Controller;
+use app\modules\api\Api;
 
 class RequestController extends Controller
 {
@@ -16,54 +17,58 @@ class RequestController extends Controller
     public function actionIndex()
     {
       $model = new WithdrawTransactions();
-
       if ($model->load(Yii::$app->request->post())) {
-        $post = [
+        //~~ set data from client/frontend to sending into api
+        $post_data = [
           'bank_code' => $model->bank_code,
           'account_number' => $model->bank_account_number,
           'amount' => $model->amount,
           'remark' => $model->remark
         ];
 
-        // $curlHandler = "https://nextar.flip.id/disburse";
-        // $secretKey = "HyzioY7LP6ZoO7nTYKbG8O4ISkyWnX1JvAEVAhtWKZumooCzqp41";
-        // $ch = curl_init();
-        // curl_setopt($ch, CURLOPT_URL, $curlHandler);
-        // curl_setopt($ch, CURLOPT_POST, 1);
-        // curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
-        // curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
-        // curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-        // curl_setopt($ch, CURLOPT_USERPWD, $secretKey);
-        // $result = curl_exec($ch);
-        $http_status = 200;
-        // $http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        // $result_json = json_decode($result, true);
-        // curl_close($ch);
+        //~~ sending data into api
+        $ws = new API($this);
+        list($http_status, $api_response) = $ws->postMethod($post_data);
 
-        $result_json['id'] = "3372233945";
-        $result_json['status'] = "PENDING";
-        $result_json['timestamp'] = "2021-02-19 21:15:59";
-        $result_json['beneficiary_name'] = "PT FLIP";
-        $result_json['fee'] = 4000;
-        $user_id = Yii::$app->user->identity->id;
-        $model->seller_id = $user_id;
-        if ($http_status == 200) {
-          $model->api_transaction_id = (string)$result_json['id'];
-          $model->status = $result_json['status'];
-          $model->timestamp = $result_json['timestamp'];
-          $model->beneficiary_name = $result_json['beneficiary_name'];
-          $model->fee = $result_json['fee'];
-        } else {
-          $model->status = "FAILED";
-        }
-        $model->save();
+        //~~ create new data to db
+        $data = [
+          'model' => $model,
+          'http_status' => $http_status,
+          'api_response' => $api_response
+        ];
+        $this->insertTransaction($data);
 
+        //~~ reload history page
         return $this->redirect(array('/transaction/history'));
       }
 
+      //~~ load index page
       return $this->render('index', [
         'model' => $model,
       ]);
+    }
+
+    private function insertTransaction($data)
+    {
+      $model = $data['model'];
+      $http_status = $data['http_status'];
+      $api_response = $data['api_response'];
+      $response = json_decode($api_response, true);
+
+      //~~ get active seller_id/user_id
+      $model->seller_id = Yii::$app->user->identity->id;
+      $model->account_balance = $model->amount;
+      $model->status = "FAILED";
+      if ($http_status == 200) {
+        $model->transaction_id = (string)$response['id'];
+        $model->status = $response['status'];
+        $model->timestamp = $response['timestamp'];
+        $model->beneficiary_name = $response['beneficiary_name'];
+        $model->fee = $response['fee'];
+      }
+      $model->api_response_status_code = (string)$http_status;
+      $model->api_response_status_message = $api_response;
+      $model->save();
     }
 
 }

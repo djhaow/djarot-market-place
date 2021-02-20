@@ -15,8 +15,6 @@
 
     <?= $form->field($model, 'bank_account_number')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'account_balance')->textInput() ?>
-
     <?= $form->field($model, 'amount')->textInput() ?>
 
     <?= $form->field($model, 'remark')->textInput() ?>

@@ -18,11 +18,11 @@
         'dataProvider' => $dataProvider,
         'columns' => [
           [
-            'attribute' => 'transaction_id',
-            'label' => 'Trns. ID',
+            'attribute' => 'withdraw_id',
+            'label' => 'ID',
             'format' => 'raw',
             'value' => function ($model) {
-              return '<span class="badge badge-pill badge-primary">' . $model->transaction_id . '</span>';
+              return '<span class="badge badge-pill badge-primary">' . $model->withdraw_id . '</span>';
             }
           ],
           [
@@ -55,12 +55,20 @@
               $view = "";
               if ($model->status == "FAILED"){
                 $view = Html::a('<span class="glyphicon glyphicon-remove text-danger"></span>');
-              } elseif($model->status == "PENDING") {
+              } elseif ($model->status == "PENDING") {
                 $view = Html::a('<span class="glyphicon glyphicon-hourglass"></span>');
               } else {
                 $view = Html::a('<span class="glyphicon glyphicon-ok text-success"></span>');
               }
               return $view;
+            }
+          ],
+          [
+            'attribute' => 'transaction_id',
+            'label' => 'Trns. ID',
+            'format' => 'raw',
+            'value' => function ($model) {
+              return Html::a('<span class="badge badge-pill badge-primary">' . $model->transaction_id . '</span>', $model->receipt);
             }
           ],
           'remark',
@@ -90,22 +98,38 @@
               'view' => function ($url, $model) {
                 $view_action = "";
                 if ($model->status == "FAILED") {
-                  $view_action = Html::a('<span class="glyphicon glyphicon-send"></span>', $url, ['title' => Yii::t('app', 'resend'),]);
-                } elseif($model->status == "PENDING") {
-                  $view_action = Html::a('<span class="glyphicon glyphicon-refresh"></span>', $url, ['title' => Yii::t('app', 'check'),]);
+                  $url = '/api/disburstment/send-api-request';
+                  $view_action = Html::a('<span class="glyphicon glyphicon-send"></span>', $url, [
+                    'title' => Yii::t('app', 'resend'),
+                    'data' => [
+                      'method' => 'POST',
+                      'params' => [
+                        'withdraw_id' => $model->withdraw_id,
+                        'amount' => $model->amount,
+                        'bank_account_number' => $model->bank_account_number,
+                        'bank_code' => $model->bank_code,
+                        'remark' => $model->remark,
+                        'transaction_id' => $model->transaction_id
+                      ],
+                    ]
+                  ]);
+                } elseif ($model->status == "PENDING") {
+                  $url = '/api/disburstment/get-api-status';
+                  $view_action = Html::a('<span class="glyphicon glyphicon-refresh"></span>', $url, [
+                    'title' => Yii::t('app', 'check'),
+                    'data' => [
+                      'method' => 'POST',
+                      'params' => [
+                        'withdraw_id' => $model->withdraw_id,
+                        'transaction_id' => $model->transaction_id,
+                      ],
+                    ]
+                  ]);
                 }
+
                 return $view_action;
               }
-            ],
-            'urlCreator' => function ($action, $model) {
-              $url = "";
-              if ($model->status == "FAILED") {
-                $url = "/api/disburstment/send";
-              } elseif($model->status == "PENDING") {
-                $url = "/api/disburstment/get";
-              }
-              return $url;
-            }
+            ]
           ],
         ],
     ]); ?>
