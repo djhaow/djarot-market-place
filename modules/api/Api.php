@@ -25,7 +25,7 @@ class Api extends \yii\base\Module
     public function getMethod($transaction_id)
     {
         //~~ set url here, cz every method can be different
-        $curl = "https://nextar.flip.id/disbursee/$transaction_id";
+        $curl = "https://nextar.flip.id/disburse/$transaction_id";
         list($http_status, $response) = $this->requestCurl('GET', $curl);
 
         return array($http_status, $response);
@@ -34,7 +34,7 @@ class Api extends \yii\base\Module
     public function postMethod($post)
     {
         //~~ set url here, cz every method can be different
-        $curl = "https://nextar.flip.id/disbursee";
+        $curl = "https://nextar.flip.id/disburse";
         list($http_status, $response) = $this->requestCurl('POST', $curl, $post);
 
         return array($http_status, $response);

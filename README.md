@@ -14,6 +14,7 @@ This is a test project web service from FLIP
 - [X] Create migrate database schema
 - [X] Code improvement
 - [X] Create docs
+- [X] Deploy to heroku
 
 # Installation
 ## Installation via Composer
@@ -40,3 +41,8 @@ return [
 ```
 3. Apply migrations with console command ```./yii migrate```. This will create tables needed for the application to work.
 4. Run the project with command```./yii serve```
+5. Demo : http://djarot-market-place.herokuapp.com/
+    User Login List : 
+    - makmur/makmur
+    - jaya/jaya
+    - sukses/sukses

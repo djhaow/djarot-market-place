@@ -39,13 +39,4 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
 
     <?php ActiveForm::end(); ?>
-
-    <div class="col-lg-offset-1" style="color:#999;">
-        User Login List : 
-        <ul>
-            <li>makmur/makmur</li>
-            <li>jaya/jaya</li>
-            <li>sukses/sukses</li>
-        </ul>
-    </div>
 </div>
