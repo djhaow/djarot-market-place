@@ -13,8 +13,11 @@ This is a test project web service from FLIP
 - [X] Save response from API disburstment into local database
 - [X] Create migrate database schema
 - [X] Code improvement
-- [X] Create docs
 - [X] Deploy to heroku
+### Create docs
+- [X] Installation docs
+- [X] Getting started docs
+- [] How to use docs
 
 # Installation
 ## Installation via Composer
@@ -41,8 +44,22 @@ return [
 ```
 3. Apply migrations with console command ```./yii migrate```. This will create tables needed for the application to work.
 4. Run the project with command```./yii serve```
-5. Demo : http://djarot-market-place.herokuapp.com/
+5. Open your browser usually like this : http://localhost:8080/
+5. Or you can access demo online here : http://djarot-market-place.herokuapp.com/
     User Login List : 
     - makmur/makmur
     - jaya/jaya
     - sukses/sukses
+
+## Quick Start
+1. On homepage area, click login menu
+![Homepage](https://ibb.co/5czRzN8)
+
+2. Login with credential above
+![Loginpage](https://ibb.co/CbLBwWn)
+
+3. Sending request disburstment to Flip API
+![Requestpage](https://ibb.co/M5dM6G9)
+
+4. This is history page, where all seller transaction log saved here
+![Historypage](https://ibb.co/TKCV5Wh)
