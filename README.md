@@ -17,7 +17,7 @@ This is a test project web service from FLIP
 ### Create docs
 - [X] Installation docs
 - [X] Getting started docs
-- [] How to use docs
+- [X] How to use docs
 
 # Installation
 ## Installation via Composer
@@ -53,13 +53,14 @@ return [
 
 ## Quick Start
 1. On homepage area, click login menu
-![Homepage](https://ibb.co/5czRzN8)
+!["Homepage"](https://ibb.co/5czRzN8 "Homepage")
+
 
 2. Login with credential above
-![Loginpage](https://ibb.co/CbLBwWn)
+!["Loginpage"](https://ibb.co/CbLBwWn "Loginpage")
 
 3. Sending request disburstment to Flip API
-![Requestpage](https://ibb.co/M5dM6G9)
+!["Requestpage"](https://ibb.co/M5dM6G9 "Requestpage")
 
 4. This is history page, where all seller transaction log saved here
-![Historypage](https://ibb.co/TKCV5Wh)
+!["Historypage"](https://ibb.co/TKCV5Wh "Historypage")
