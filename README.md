@@ -53,14 +53,13 @@ return [
 
 ## Quick Start
 1. On homepage area, click login menu
-!["Homepage"](https://ibb.co/5czRzN8 "Homepage")
-
+!["Homepage"](https://i.ibb.co/KyQrQMq/homepage.png "Homepage")
 
 2. Login with credential above
-!["Loginpage"](https://ibb.co/CbLBwWn "Loginpage")
+!["Loginpage"](https://i.ibb.co/8rkMmXj/loginpage.png "Loginpage")
 
 3. Sending request disburstment to Flip API
-!["Requestpage"](https://ibb.co/M5dM6G9 "Requestpage")
+!["Requestpage"](https://i.ibb.co/Z19WmYN/requestpage.png "Requestpage")
 
 4. This is history page, where all seller transaction log saved here
-!["Historypage"](https://ibb.co/TKCV5Wh "Historypage")
+!["Historypage"](https://i.ibb.co/k3dRFmc/historypage.png "Historypage")
