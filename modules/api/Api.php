@@ -2,6 +2,7 @@
 
 namespace app\modules\api;
 
+use Yii;
 /**
  * api module definition class
  */
@@ -56,6 +57,9 @@ class Api extends \yii\base\Module
         $http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
 
+        //~~ save api log
+        Yii::info([$method, $curlHandler, $http_status, $response], 'api_log');
+        
         return array($http_status, $response);
     }
 

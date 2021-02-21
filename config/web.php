@@ -42,7 +42,11 @@ $config = [
             'targets' => [
                 [
                     'class' => 'yii\log\FileTarget',
-                    'levels' => ['error', 'warning'],
+                    // 'levels' => ['error', 'warning'],
+                    'logVars' => [],
+                    'categories' => ['api_log'],
+                    'exportInterval' => 1,
+                    'logFile' => '@app/runtime/logs/api.log',
                 ],
             ],
         ],
