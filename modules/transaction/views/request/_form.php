@@ -9,7 +9,7 @@
 
 <div class="withdraw-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['id' => 'request-form']); ?>
 
     <?= $form->field($model, 'bank_code')->textInput(['maxlength' => true]) ?>
 

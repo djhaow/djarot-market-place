@@ -63,3 +63,9 @@ return [
 
 4. This is history page, where all seller transaction log saved here
 !["Historypage"](https://i.ibb.co/k3dRFmc/historypage.png "Historypage")
+
+## Unit Testing
+Test can be executed by running
+```
+vendor/bin/codecept run unit
+```
