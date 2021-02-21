@@ -65,6 +65,12 @@ class RequestController extends Controller
         $model->timestamp = $response['timestamp'];
         $model->beneficiary_name = $response['beneficiary_name'];
         $model->fee = $response['fee'];
+
+        //~~ set success flash message
+        Yii::$app->session->setFlash('success', "Received from Flip API");
+      } else {
+        //~~ set warning flash message
+        Yii::$app->session->setFlash('warning', "Failed connect with Flip API");
       }
       $model->api_response_status_code = (string)$http_status;
       $model->api_response_status_message = $api_response;

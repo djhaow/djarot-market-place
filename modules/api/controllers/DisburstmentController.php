@@ -90,7 +90,13 @@ class DisburstmentController extends Controller
             $withdraw_transaction->time_served = $response['time_served'] != "0000-00-00 00:00:00" ? $response['time_served'] : NULL;
             $withdraw_transaction->transaction_id = (string)$response['id'];
             $withdraw_transaction->timestamp = $response['timestamp'];
-        } 
+
+            //~~ set success flash message
+            Yii::$app->session->setFlash('success', "Received from Flip API");
+        } else {
+            //~~ set warningflash message
+            Yii::$app->session->setFlash('warning', "Failed connect with Flip API");
+        }
         $withdraw_transaction->api_response_status_code = (string)$http_status;
         $withdraw_transaction->api_response_status_message = $api_response;
         $withdraw_transaction->save();
