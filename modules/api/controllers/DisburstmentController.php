@@ -4,8 +4,8 @@ namespace app\modules\api\controllers;
 
 use Yii;
 use yii\web\Controller;
-use app\models\WithdrawTransactions;
 use app\modules\api\Api;
+use app\modules\transaction\Transaction;
 
 /**
  * Default controller for the `api` module
@@ -40,7 +40,8 @@ class DisburstmentController extends Controller
             'http_status' => $http_status,
             'api_response' => $api_response
         ];
-        $this->updateTransaction($data);
+        $transaction = new Transaction($this);
+        $transaction->updateTransaction($data);
 
         //~~ reload the page
         return $this->redirect(array('/transaction/history'));
@@ -68,38 +69,11 @@ class DisburstmentController extends Controller
             'http_status' => $http_status,
             'api_response' => $api_response
         ];
-        $this->updateTransaction($data);
+        $transaction = new Transaction($this);
+        $transaction->updateTransaction($data);
 
         //~~ reload the page
         return $this->redirect(array('/transaction/history'));
-    }
-
-    private function updateTransaction($data)
-    {
-        $post = $data['post'];
-        $http_status = $data['http_status'];
-        $api_response = $data['api_response'];
-        $response = json_decode($api_response, true);
-
-        $withdraw_transaction = WithdrawTransactions::findOne($post['withdraw_id']);
-        if ($http_status == 200) {
-            $withdraw_transaction->beneficiary_name = $response['beneficiary_name'];
-            $withdraw_transaction->fee = $response['fee'];
-            $withdraw_transaction->receipt = $response['receipt'];
-            $withdraw_transaction->status = $response['status'];
-            $withdraw_transaction->time_served = $response['time_served'] != "0000-00-00 00:00:00" ? $response['time_served'] : NULL;
-            $withdraw_transaction->transaction_id = (string)$response['id'];
-            $withdraw_transaction->timestamp = $response['timestamp'];
-
-            //~~ set success flash message
-            Yii::$app->session->setFlash('success', "Received from Flip API");
-        } else {
-            //~~ set warningflash message
-            Yii::$app->session->setFlash('warning', "Failed connect with Flip API");
-        }
-        $withdraw_transaction->api_response_status_code = (string)$http_status;
-        $withdraw_transaction->api_response_status_message = $api_response;
-        $withdraw_transaction->save();
     }
 
 }

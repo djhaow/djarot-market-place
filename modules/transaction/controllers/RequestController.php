@@ -5,6 +5,7 @@ use Yii;
 use app\models\WithdrawTransactions;
 use yii\web\Controller;
 use app\modules\api\Api;
+use app\modules\transaction\Transaction;
 
 class RequestController extends Controller
 {
@@ -36,7 +37,8 @@ class RequestController extends Controller
           'http_status' => $http_status,
           'api_response' => $api_response
         ];
-        $this->insertTransaction($data);
+        $transaction = new Transaction($this);
+        $transaction->insertTransaction($data);
 
         //~~ reload history page
         return $this->redirect(array('/transaction/history'));
@@ -46,35 +48,6 @@ class RequestController extends Controller
       return $this->render('index', [
         'model' => $model,
       ]);
-    }
-
-    private function insertTransaction($data)
-    {
-      $model = $data['model'];
-      $http_status = $data['http_status'];
-      $api_response = $data['api_response'];
-      $response = json_decode($api_response, true);
-
-      //~~ get active seller_id/user_id
-      $model->seller_id = Yii::$app->user->identity->id;
-      $model->account_balance = $model->amount;
-      $model->status = "FAILED";
-      if ($http_status == 200) {
-        $model->transaction_id = (string)$response['id'];
-        $model->status = $response['status'];
-        $model->timestamp = $response['timestamp'];
-        $model->beneficiary_name = $response['beneficiary_name'];
-        $model->fee = $response['fee'];
-
-        //~~ set success flash message
-        Yii::$app->session->setFlash('success', "Received from Flip API");
-      } else {
-        //~~ set warning flash message
-        Yii::$app->session->setFlash('warning', "Failed connect with Flip API");
-      }
-      $model->api_response_status_code = (string)$http_status;
-      $model->api_response_status_message = $api_response;
-      $model->save();
     }
 
 }
