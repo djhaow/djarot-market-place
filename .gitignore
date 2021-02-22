@@ -34,6 +34,7 @@ tests/_support/_generated
 
 #config folder
 /config/db.php
+/config/params.php
 
 # OS generated files
 .DS_Store

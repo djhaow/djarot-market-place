@@ -35,17 +35,24 @@ After install the application, you have to conduct the following steps to initia
 ```
 return [
     'class' => 'yii\db\Connection',
-    'dsn' => 'mysql:host=localhost;dbname=your_database_name',
-    //'dsn' => 'mysql:host=localhost;port=8889;dbname=your_database_name;unix_socket=/Applications/MAMP/tmp/mysql/mysql.sock', //~~ MAMP users
+    'dsn' => 'mysql:host=localhost;dbname=YOUR_DATABASE_NAME',
+    //'dsn' => 'mysql:host=localhost;dbname=YOUR_DATABASE_NAME;unix_socket=/Applications/MAMP/tmp/mysql/mysql.sock', //~~ MAMP users
     'username' => 'root',
     'password' => '',
     'charset' => 'utf8',
 ];
 ```
+3. Edit API configuration file inside config/params.php, for example : 
+```
+return [
+    'api_hostname' => 'http://test.com',
+    'api_secret_key' => 'XXXXXXXX'
+];
+```
 3. Apply migrations with console command ```./yii migrate```. This will create tables needed for the application to work.
 4. Run the project with command```./yii serve```
 5. Open your browser usually like this : http://localhost:8080/
-5. Or you can access demo online here : http://djarot-market-place.herokuapp.com/
+6. Or you can access demo online here : http://djarot-market-place.herokuapp.com/
     User Login List : 
     - makmur/makmur
     - jaya/jaya
